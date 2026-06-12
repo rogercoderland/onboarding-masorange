@@ -1,4 +1,6 @@
 packages:
-  - "apps/*"
-
+  - 'apps/*'
+  - 'libs/catalog/*'
+  - 'libs/*'
+  - 'libs/devices/*'
 autoInstallPeers: true

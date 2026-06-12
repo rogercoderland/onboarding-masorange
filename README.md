@@ -1,101 +1,91 @@
-# PracticeNxNext
+# onboarding-nx — Práctica de onboarding MasOrange (squad Digital)
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+Repo **personal de práctica** (fuera del monorepo) para entrenar el stack y el modelo mental del
+squad **Digital** antes de empezar con tickets reales. Acompaña a la guía
+[`../public-pages-guia.md`](../public-pages-guia.md).
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+Stack: **Nx 22** + **Next.js 16 (App Router)** + **React 19** + **Tailwind** + **TS project
+references** + **Jest** (app Next) / **Vitest** (libs y app Vite).
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/next?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+Cubre la **Unit 1 — Base** del onboarding: workspace Nx con references, app Next que compila y
+corre, libs gestionadas con `package.json` (no `project.json`), y una estructura de librerías que
+**imita la arquitectura hexagonal** del workspace `digital` del monorepo.
 
-## Run tasks
+## Estructura
 
-To run the dev server for your app, use:
-
-```sh
-npx nx dev web
+```text
+onboarding-nx/
+├── apps/
+│   ├── web/                     # app Next.js (App Router + Tailwind, tests con Jest)
+│   │                            #   → @onboarding-nx/web
+│   └── panel/                   # app React + Vite (SPA, tests con Vitest)
+│                                #   → @onboarding-nx/panel
+└── libs/
+    ├── ui/                      # lib de componentes React (Vitest)   → @onboarding-nx/ui
+    └── devices/                 # bounded context partido en capas hexagonales
+        ├── domain/              # @onboarding-nx/domain          (TS puro: modelos + ports)
+        ├── application/         # @onboarding-nx/application     (casos de uso; depende de domain)
+        └── infrastructure/      # @onboarding-nx/infrastructure  (adapters; impl. del port)
 ```
 
-To create a production bundle:
+### Estado de las capas hexagonales
+
+`libs/devices/{domain,application,infrastructure}` están **scaffolded** (cada capa exporta de
+momento un stub que devuelve el nombre de su capa). La estructura y las `references` ya respetan la
+regla **las dependencias fluyen hacia dentro** (el dominio no conoce React/HTTP), pero el flujo de
+ejemplo todavía no está implementado. El primer ejercicio es rellenarlas (ver más abajo).
+
+## Comandos (siempre con `pnpm nx` desde la raíz del workspace)
 
 ```sh
-npx nx build web
+pnpm nx dev @onboarding-nx/web         # levantar la app Next en dev
+pnpm nx build @onboarding-nx/web       # build de producción de la app Next
+pnpm nx dev @onboarding-nx/panel          # levantar la SPA (React + Vite)
+pnpm nx graph                             # ver el grafo de dependencias
+
+# Correr todo el workspace:
+pnpm nx run-many -t lint test typecheck build
+
+# Solo lo afectado por tus cambios:
+pnpm nx affected -t lint test typecheck
+
+# Sincronizar TS project references tras añadir deps entre libs:
+pnpm nx sync
 ```
 
-To see all available targets to run for a project, run:
+> Tras crear una lib nueva o añadir una dependencia entre libs: `pnpm install` (enlaza el paquete
+> workspace) y `pnpm nx sync` (actualiza las project references). Es exactamente el tipo de paso
+> que se practica en la Unit 1.
+
+## Setup
 
 ```sh
-npx nx show project web
+pnpm install                              # instalar dependencias (usa pnpm + workspaces)
+pnpm nx run-many -t lint test typecheck build   # verificar que todo está en verde
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+Requisitos: Node 20+, pnpm. Convención de tests: **Vitest** en las libs y en la app `panel`;
+**Jest** en la app `web` (Next aún no soporta vitest oficialmente).
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Ejercicios sugeridos (ver detalle en la guía, Bloque 6)
 
-## Add new projects
+1. **Recon**: `pnpm nx graph` y localiza la relación `infrastructure → application → domain`.
+2. **Implementa el flujo hexagonal** en `libs/devices/*/src/lib/*.ts`: define un modelo `Device` y
+   un `DeviceCatalogPort` en **domain**, un caso de uso `GetDevices` en **application**, y un
+   `InMemoryDeviceCatalogAdapter` en **infrastructure**. Declara las deps entre capas (`workspace:*`)
+   en cada `package.json` y corre `pnpm nx sync`. Que `pnpm nx test` siga en verde.
+3. **Conecta la app**: en `apps/web`, crea una página que use el adapter para listar dispositivos
+   (practica componentes server/client de Next).
+4. **Convención de commits**: rama `feat/PRACT-1-device-catalog`, commit
+   `feat(devices): PRACT-1 add GetDevices use case`.
+5. **Workflow de PR**: rama → PR → review del mentor → merge (objetivo mínimo de la Unit 1:
+   ≥1 PR mergeado).
+6. **Rompe un boundary a propósito**: importa `react` desde `@onboarding-nx/domain` y observa por
+   qué es mala idea (en el monorepo real lo bloquea ESLint `@nx/enforce-module-boundaries`). Revierte.
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+## Estado verificado
 
-Use the plugin's generator to create new projects.
-
-To generate a new application, use:
-
-```sh
-npx nx g @nx/next:app demo
-```
-
-To generate a new library, use:
-
-```sh
-npx nx g @nx/react:lib mylib
-```
-
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
-
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Set up CI!
-
-### Step 1
-
-To connect to Nx Cloud, run the following command:
-
-```sh
-npx nx connect
-```
-
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
-
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-### Step 2
-
-Use the following command to configure a CI workflow for your workspace:
-
-```sh
-npx nx g ci-workflow
-```
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/nx-api/next?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Ejecutado `pnpm nx run-many -t lint test typecheck build` sobre los 6 proyectos → **todo en verde**
+(`@onboarding-nx/web`, `@onboarding-nx/panel`, `@onboarding-nx/ui`, `@onboarding-nx/domain`,
+`@onboarding-nx/application`, `@onboarding-nx/infrastructure`). Único aviso: un `eslint-disable` sin
+usar en `web` (cosmético, `nx lint @onboarding-nx/web --fix`).
