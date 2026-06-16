@@ -1,15 +1,10 @@
 export default function Index() {
-  /*
-   * Replace the elements below with your own.
-   *
-   * Note: The corresponding styles are in the ./index.tailwind file.
-   */
   return (
     <div>
       <div className="wrapper">
         <div className="container">
           <div id="welcome">
-            <h1>
+            <h1 className="text-brand">
               <span> Hello there, </span>
               Welcome @practice-nx-next/web 👋
             </h1>
