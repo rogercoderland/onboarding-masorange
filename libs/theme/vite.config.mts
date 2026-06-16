@@ -45,6 +45,7 @@ export default defineConfig(() => ({
     name: '@onboarding-nx/theme',
     watch: false,
     globals: true,
+    passWithNoTests: true,
     environment: 'jsdom',
     include: ['{src,tests}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     reporters: ['default'],
