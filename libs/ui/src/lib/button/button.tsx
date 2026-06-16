@@ -25,49 +25,42 @@ const buttonVariants = cva(buttonClasses.root, {
   },
 });
 
-/**
- * Generic, theme-driven button built on Base UI.
- *
- * Variants: `primary` (default), `secondary`, `ghost`. Sizes: `sm`, `md` (default), `lg`.
- * `loading` shows a spinner, sets `aria-busy`, and blocks interaction.
- *
- * @example
- * <Button onClick={save}>Save</Button>
- * <Button variant="secondary" iconLeft={<PlusIcon />}>Add</Button>
- * <Button loading>Saving…</Button>
- */
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  {
-    variant,
-    size,
-    loading = false,
-    disabled = false,
-    iconLeft,
-    className,
-    children,
-    ...props
-  },
-  ref,
-) {
-  const isDisabled = disabled || loading;
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  function Button(
+    {
+      variant,
+      size,
+      loading = false,
+      disabled = false,
+      iconLeft,
+      className,
+      children,
+      ...props
+    },
+    ref,
+  ) {
+    const isDisabled = disabled || loading;
 
-  return (
-    <BaseButton
-      ref={ref}
-      className={clsx(buttonVariants({ variant, size }), className)}
-      disabled={isDisabled}
-      data-loading={loading || undefined}
-      aria-busy={loading || undefined}
-      {...props}
-    >
-      {loading && <span className={buttonClasses.spinner} aria-hidden="true" />}
-      {!loading && iconLeft && (
-        <span className={buttonClasses.icon} aria-hidden="true">
-          {iconLeft}
-        </span>
-      )}
-      <span className={buttonClasses.label}>{children}</span>
-    </BaseButton>
-  );
-});
+    return (
+      <BaseButton
+        ref={ref}
+        className={clsx(buttonVariants({ variant, size }), className)}
+        disabled={isDisabled}
+        data-loading={loading || undefined}
+        aria-busy={loading || undefined}
+        {...props}
+      >
+        {loading && (
+          <span className={buttonClasses.spinner} aria-hidden="true" />
+        )}
+        {!loading && iconLeft && (
+          <span className={buttonClasses.icon} aria-hidden="true">
+            {iconLeft}
+          </span>
+        )}
+        <span className={buttonClasses.label}>{children}</span>
+      </BaseButton>
+    );
+  },
+);
 Button.displayName = 'Button';

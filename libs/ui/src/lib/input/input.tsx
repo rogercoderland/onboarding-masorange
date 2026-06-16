@@ -19,16 +19,6 @@ const inputRoot = cva(inputClasses.root, {
   },
 });
 
-/**
- * Generic, theme-driven text input built on Base UI's Field + Input.
- *
- * Passing `error` renders the message below the control, sets `aria-invalid`,
- * and applies the error styling. `disabled` flows through Base UI's Field.
- *
- * @example
- * <Input label="Email" placeholder="you@example.com" value={v} onChange={onChange} />
- * <Input label="Price" value="000" error="Enter a valid price" />
- */
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   { label, error, disabled = false, className, inputClassName, ...props },
   ref,
