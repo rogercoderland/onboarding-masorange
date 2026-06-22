@@ -1,6 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import '@onboarding-nx/theme/styles.css';
+
+.text-brand {
+  color: rgb(var(--color-brand));
+}
 
 html {
   -webkit-text-size-adjust: 100%;

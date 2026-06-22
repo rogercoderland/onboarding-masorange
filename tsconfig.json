@@ -20,6 +20,9 @@
     },
     {
       "path": "./libs/devices/infrastructure"
+    },
+    {
+      "path": "./libs/theme"
     }
   ]
 }

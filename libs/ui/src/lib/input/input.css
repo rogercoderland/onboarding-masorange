@@ -1,0 +1,88 @@
+.input {
+  --_ink: rgb(var(--color-ink, 26 16 33));
+  --_ink-muted: rgb(var(--color-ink-muted, 110 100 120));
+  --_surface: rgb(var(--color-surface, 255 255 255));
+  --_surface-muted: rgb(var(--color-surface-muted, 245 243 247));
+  --_border: rgb(var(--color-ink, 26 16 33) / 0.18);
+  --_danger: rgb(var(--color-danger, 197 48 48));
+  --_radius: var(--radius-control, 0.625rem);
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+/* ---- Label -------------------------------------------------------------- */
+.input__label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--_ink);
+}
+
+.input[data-disabled] .input__label {
+  color: var(--_ink-muted);
+}
+
+.input--error .input__label {
+  color: var(--_danger);
+}
+
+/* ---- Control ------------------------------------------------------------ */
+.input__control {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--_ink);
+  background: var(--_surface);
+  border: 1px solid var(--_border);
+  border-radius: var(--_radius);
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.input__control::placeholder {
+  color: var(--_ink-muted);
+  opacity: 0.7;
+}
+
+/* focus */
+.input__control:focus-visible {
+  border-color: var(--_ink);
+  box-shadow: 0 0 0 3px rgb(var(--color-ink, 26 16 33) / 0.12);
+}
+
+/* disabled */
+.input__control:disabled {
+  background: var(--_surface-muted);
+  color: var(--_ink-muted);
+  cursor: not-allowed;
+}
+
+.input__control:disabled::placeholder {
+  color: var(--_ink-muted);
+  opacity: 0.6;
+}
+
+/* error */
+.input--error .input__control,
+.input__control[aria-invalid='true'] {
+  border-color: var(--_danger);
+}
+
+.input--error .input__control:focus-visible,
+.input__control[aria-invalid='true']:focus-visible {
+  border-color: var(--_danger);
+  box-shadow: 0 0 0 3px rgb(var(--color-danger, 197 48 48) / 0.15);
+}
+
+/* ---- Error message ------------------------------------------------------ */
+.input__error {
+  font-size: 0.8125rem;
+  color: var(--_danger);
+}
