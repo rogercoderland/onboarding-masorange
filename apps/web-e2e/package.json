@@ -1,0 +1,18 @@
+{
+  "name": "@onboarding-nx/web-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": ["@onboarding-nx/web"],
+    "targets": {
+      "e2e": {
+        "executor": "nx:run-commands",
+        "dependsOn": ["@onboarding-nx/web:build"],
+        "options": {
+          "command": "playwright test",
+          "cwd": "apps/web-e2e"
+        }
+      }
+    }
+  }
+}

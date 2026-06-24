@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "outDir": "../../dist/out-tsc/web-e2e",
+    "sourceMap": false
+  },
+  "include": ["src/**/*.ts", "playwright.config.ts"]
+}

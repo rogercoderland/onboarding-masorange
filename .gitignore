@@ -55,5 +55,10 @@ out
 
 test-output
 
+# Playwright
+playwright-report
+test-results
+.playwright
+
 vite.config.*.timestamp*
 vitest.config.*.timestamp*

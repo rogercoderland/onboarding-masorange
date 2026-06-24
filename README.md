@@ -58,8 +58,7 @@ pnpm nx sync
 ```
 
 > Tras crear una lib nueva o añadir una dependencia entre libs: `pnpm install` (enlaza el paquete
-> workspace) y `pnpm nx sync` (actualiza las project references). Es exactamente el tipo de paso
-> que se practica en la Unit 1.
+> workspace) y `pnpm nx sync` (actualiza las project references).
 
 ## Setup
 

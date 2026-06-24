@@ -7,22 +7,23 @@ Cada pantalla muestra un **badge con su tipo de render + timestamp**, de modo qu
 simple vista (recargas y observas qué se congela y qué no).
 
 > Los datos del CMS están **mockeados** en esta unit (`app/lib/mock-api.ts`); en Unit 4 se
-> sustituyen por Contentful sin cambiar la forma de los modelos.
+> sustituyen por Contentful.
 
 ## Pantallas → patrón de render → estrategia de caché
 
-| Pantalla (ruta) | Patrón | Estrategia (`'use cache'`) | `cacheTag` | Timestamp |
-|---|---|---|---|---|
-| **Home** `/` | **Static** | `cacheLife('max')` | `home-sections` | congelado (build) |
-| **Catálogo** `/dispositivos` | **ISR** + filtros CSR | `cacheLife('catalog')` (revalida 5 min) | `devices` | congelado hasta ventana/tag |
-| **PDP** `/dispositivos/[slug]` | **Dynamic** (SSG de los destacados + on-demand del resto) | `cacheLife('hours')` | `device:<slug>` | congelado por slug |
-| **Carrito** `/carrito` + drawer | **CSR** | sin caché · `localStorage` | — | **vivo** (cada render) |
+| Pantalla (ruta)                 | Patrón                                                    | Estrategia (`'use cache'`)              | `cacheTag`      | Timestamp                   |
+| ------------------------------- | --------------------------------------------------------- | --------------------------------------- | --------------- | --------------------------- |
+| **Home** `/`                    | **Static**                                                | `cacheLife('max')`                      | `home-sections` | congelado (build)           |
+| **Catálogo** `/dispositivos`    | **ISR** + filtros CSR                                     | `cacheLife('catalog')` (revalida 5 min) | `devices`       | congelado hasta ventana/tag |
+| **PDP** `/dispositivos/[slug]`  | **Dynamic** (SSG de los destacados + on-demand del resto) | `cacheLife('hours')`                    | `device:<slug>` | congelado por slug          |
+| **Carrito** `/carrito` + drawer | **CSR**                                                   | sin caché · `localStorage`              | —               | **vivo** (cada render)      |
 
 `cacheLife('catalog')` es un **perfil con nombre** definido en [`next.config.js`](./next.config.js)
 (mismo mecanismo que producción: un mapa `cacheLife` de perfiles). `max` y `hours` son perfiles
 **integrados** de Next.
 
 ### Qué demuestra cada timestamp
+
 - **Static / ISR / Dynamic**: el `generatedAt` se **congela** dentro de la entrada de caché. Si
   recargas, no cambia — hasta que su ventana (ISR) o su tag se revaliden.
 - **CSR** (carrito): el timestamp se genera **en el cliente** (en un `useEffect`) y cambia en cada
@@ -41,11 +42,13 @@ simple vista (recargas y observas qué se congela y qué no).
 ## Server action + revalidación
 
 ### Server action (PDP)
+
 `app/dispositivos/[slug]/actions.ts` (`'use server'`) revalida **una sola ficha** vía
 `revalidateTag('device:<slug>', 'max')`. El formulario "Refrescar datos" de la PDP lo dispara; al
 recargar, **solo** el timestamp de esa ficha salta.
 
 ### API de revalidación on-demand
+
 `POST /api/revalidate` — contraparte externa del server action (curl hoy, webhook de Contentful en
 Unit 4). Protegida por un **secreto compartido**.
 
@@ -75,8 +78,8 @@ curl -X POST "http://localhost:3000/api/revalidate?path=/dispositivos" \
 cp .env.example .env.local      # y pon un valor real en .env.local
 ```
 
-| Variable | Para qué |
-|---|---|
+| Variable            | Para qué                                                      |
+| ------------------- | ------------------------------------------------------------- |
 | `REVALIDATE_SECRET` | secreto del header `x-revalidate-secret` de `/api/revalidate` |
 
 `.env.local` está **gitignored** — nunca se commitea. Solo se versiona `.env.example` (placeholder).
@@ -95,18 +98,32 @@ En `dev`, cualquier dato dinámico sin cachear debe ir dentro de un scope `'use 
 
 ## Lighthouse
 
-Medido con `npx lighthouse <url> --preset=desktop` sobre el build de producción
+Medir con `npx lighthouse <url> --preset=desktop` sobre el build de producción
 (`nx build` + `nx start`), Chrome headless:
 
-| Pantalla | Performance | FCP | LCP | TBT | CLS |
-|---|:---:|:---:|:---:|:---:|:---:|
-| `/` (Static) | **100** | 0.2 s | 0.6 s | 0 ms | 0 |
-| `/dispositivos` (ISR) | **100** | 0.2 s | 0.5 s | 0 ms | 0 |
-| `/dispositivos/[slug]` (Dynamic) | **100** | 0.2 s | 0.5 s | 0 ms | 0 |
-
-Por encima del umbral del DoD (> 90). Apoyado en: `next/image` en todas las imágenes (hero y
+Debe estar por encima del umbral del DoD (> 90). Apoyado en: `next/image` en todas las imágenes (hero y
 primera tarjeta con `priority`, resto lazy), CSS con design tokens (sin framework de estilos
 pesado), y JS de cliente acotado a las islas interactivas.
+
+## Tests E2E (Playwright)
+
+Proyecto `@onboarding-nx/web-e2e` (en [`apps/web-e2e`](../web-e2e)). El target hace `build` de la
+app, levanta `next start` y corre Playwright con el **Chrome del sistema** (`channel: 'chrome'`, sin
+descargar navegadores).
+
+```bash
+pnpm nx e2e @onboarding-nx/web-e2e
+```
+
+3 flujos (4 tests):
+
+1. **Home (Static)** — renderiza hero + grid; el badge `STATIC` mantiene el **mismo timestamp** tras
+   recargar (congelado).
+2. **Catálogo → PDP → carrito** — filtra por marca (la query `?brand=` se actualiza), abre una PDP,
+   añade al carrito → el drawer muestra el artículo y el contador del header pasa a 1.
+3. **Revalidación** — `POST /api/revalidate` sin secreto → **401**; con secreto y
+   `?tag=device:<slug>` → **200** y, tras revalidar, el timestamp de esa PDP **cambia**
+   (stale-while-revalidate).
 
 ## Estructura relevante
 
