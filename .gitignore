@@ -49,6 +49,10 @@ Thumbs.db
 .next
 out
 
+# local env files (never commit secrets)
+.env
+.env*.local
+
 test-output
 
 vite.config.*.timestamp*

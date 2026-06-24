@@ -1,0 +1,26 @@
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  color: rgb(var(--color-ink-muted, 110 100 120));
+}
+
+.row dt,
+.row dd {
+  margin: 0;
+}
+
+.total {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgb(var(--color-surface-muted, 245 243 247));
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: rgb(var(--color-ink, 26 16 33));
+}

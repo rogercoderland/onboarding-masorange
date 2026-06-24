@@ -1,0 +1,23 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.viewCart {
+  text-align: center;
+  font-weight: 600;
+  color: rgb(var(--color-brand, 158 28 136));
+}
+
+.viewCart:hover {
+  text-decoration: underline;
+}
+
+.success {
+  padding: 1rem;
+  text-align: center;
+  font-weight: 600;
+  color: rgb(var(--color-brand, 158 28 136));
+}

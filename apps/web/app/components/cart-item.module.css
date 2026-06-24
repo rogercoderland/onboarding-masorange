@@ -1,0 +1,83 @@
+.item {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  gap: 0.875rem;
+  padding: 0.875rem 0;
+  border-bottom: 1px solid rgb(var(--color-surface-muted, 245 243 247));
+}
+
+.media {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-control, 0.625rem);
+  overflow: hidden;
+  background: rgb(var(--color-surface-muted, 245 243 247));
+}
+
+.image {
+  object-fit: cover;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.name {
+  font-weight: 600;
+  color: rgb(var(--color-ink, 26 16 33));
+}
+
+.variant {
+  font-size: 0.8125rem;
+  color: rgb(var(--color-ink-muted, 110 100 120));
+}
+
+.price {
+  font-weight: 700;
+  color: rgb(var(--color-brand, 158 28 136));
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.qty {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgb(var(--color-ink, 26 16 33) / 0.15);
+  border-radius: var(--radius-control, 0.625rem);
+  padding: 0.125rem 0.5rem;
+}
+
+.qty button {
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 1rem;
+  line-height: 1;
+  border: none;
+  background: none;
+  color: rgb(var(--color-ink, 26 16 33));
+  cursor: pointer;
+}
+
+.remove {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 0.8125rem;
+  color: rgb(var(--color-ink-muted, 110 100 120));
+  cursor: pointer;
+}
+
+.remove:hover {
+  color: rgb(var(--color-danger, 197 48 48));
+}

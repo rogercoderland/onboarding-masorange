@@ -1,0 +1,11 @@
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.empty {
+  padding: 2rem 0;
+  text-align: center;
+  color: rgb(var(--color-ink-muted, 110 100 120));
+}

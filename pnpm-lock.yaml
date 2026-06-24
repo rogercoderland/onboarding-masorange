@@ -200,6 +200,9 @@ importers:
       '@onboarding-nx/theme':
         specifier: workspace:*
         version: link:../../libs/theme
+      '@onboarding-nx/ui':
+        specifier: workspace:*
+        version: link:../../libs/ui
       next:
         specifier: ~16.1.6
         version: 16.1.7(@babel/core@7.29.7)(babel-plugin-macros@3.1.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(sass@1.100.0)
@@ -226,7 +229,17 @@ importers:
 
   libs/theme: {}
 
-  libs/ui: {}
+  libs/ui:
+    dependencies:
+      '@base-ui/react':
+        specifier: ^1.5.0
+        version: 1.5.0(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
 
 packages:
 

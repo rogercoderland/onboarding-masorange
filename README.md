@@ -11,6 +11,10 @@ Cubre la **Unit 1 — Base** del onboarding: workspace Nx con references, app Ne
 corre, libs gestionadas con `package.json` (no `project.json`), y una estructura de librerías que
 **imita la arquitectura hexagonal** del workspace `digital` del monorepo.
 
+La **Unit 3 — Minimal App** (patrones de render de Next + Cache Components) está documentada en el
+README de la app: [`apps/web/README.md`](./apps/web/README.md) — las 4 pantallas, su estrategia de
+caché, el server action, la API de revalidación y los resultados de Lighthouse.
+
 ## Estructura
 
 ```text
