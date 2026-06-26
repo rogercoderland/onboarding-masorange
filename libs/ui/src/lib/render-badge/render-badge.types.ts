@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from 'react';
 
-export const RENDER_TYPES = ['static', 'isr', 'dynamic', 'csr'] as const;
+export const RENDER_TYPES = ['static', 'isr', 'ssr', 'dynamic', 'csr'] as const;
 
 export type RenderType = (typeof RENDER_TYPES)[number];
 

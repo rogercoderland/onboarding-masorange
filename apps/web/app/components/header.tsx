@@ -17,6 +17,7 @@ export function Header() {
         <nav className={styles.nav} aria-label="Principal">
           <Link href="/">Inicio</Link>
           <Link href="/dispositivos">Dispositivos</Link>
+          <Link href="/buscar">Buscar</Link>
         </nav>
 
         {/* The cart icon navigates to the full /carrito page; the drawer is a

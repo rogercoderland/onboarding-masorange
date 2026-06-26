@@ -8,6 +8,7 @@ import './render-badge.css';
 const RENDER_LABELS: Record<RenderType, string> = {
   static: 'STATIC',
   isr: 'ISR',
+  ssr: 'SSR',
   dynamic: 'DYNAMIC',
   csr: 'CSR',
 };
@@ -17,6 +18,7 @@ const badgeVariants = cva(renderBadgeClasses.root, {
     type: {
       static: renderBadgeClasses.static,
       isr: renderBadgeClasses.isr,
+      ssr: renderBadgeClasses.ssr,
       dynamic: renderBadgeClasses.dynamic,
       csr: renderBadgeClasses.csr,
     },

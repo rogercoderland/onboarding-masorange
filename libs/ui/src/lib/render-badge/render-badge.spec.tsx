@@ -26,6 +26,15 @@ describe('RenderBadge', () => {
     expect(badge).not.toHaveClass('render-badge--static');
   });
 
+  it('supports the ssr render type', () => {
+    const { container } = render(<RenderBadge type="ssr" renderedAt={AT} />);
+
+    expect(screen.getByText('SSR')).toBeInTheDocument();
+    const badge = container.querySelector('.render-badge');
+    expect(badge).toHaveClass('render-badge--ssr');
+    expect(badge).toHaveAttribute('data-render', 'ssr');
+  });
+
   it('shows the strategy only when provided', () => {
     const { rerender } = render(<RenderBadge type="dynamic" renderedAt={AT} />);
 

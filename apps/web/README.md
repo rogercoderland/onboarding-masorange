@@ -15,8 +15,9 @@ simple vista (recargas y observas qué se congela y qué no).
 | ------------------------------- | --------------------------------------------------------- | --------------------------------------- | --------------- | --------------------------- |
 | **Home** `/`                    | **Static**                                                | `cacheLife('max')`                      | `home-sections` | congelado (build)           |
 | **Catálogo** `/dispositivos`    | **ISR** + filtros CSR                                     | `cacheLife('catalog')` (revalida 5 min) | `devices`       | congelado hasta ventana/tag |
+| **Buscar** `/buscar`            | **SSR** (por petición)                                    | sin caché · lee `searchParams`          | —               | **vivo** (servidor, cada petición) |
 | **PDP** `/dispositivos/[slug]`  | **Dynamic** (SSG de los destacados + on-demand del resto) | `cacheLife('hours')`                    | `device:<slug>` | congelado por slug          |
-| **Carrito** `/carrito` + drawer | **CSR**                                                   | sin caché · `localStorage`              | —               | **vivo** (cada render)      |
+| **Carrito** `/carrito` + drawer | **CSR**                                                   | sin caché · `localStorage`              | —               | **vivo** (cliente, cada render)      |
 
 `cacheLife('catalog')` es un **perfil con nombre** definido en [`next.config.js`](./next.config.js)
 (mismo mecanismo que producción: un mapa `cacheLife` de perfiles). `max` y `hours` son perfiles
@@ -26,6 +27,11 @@ simple vista (recargas y observas qué se congela y qué no).
 
 - **Static / ISR / Dynamic**: el `generatedAt` se **congela** dentro de la entrada de caché. Si
   recargas, no cambia — hasta que su ventana (ISR) o su tag se revaliden.
+- **SSR** (`/buscar`): leer `searchParams` en un Server Component **sin `'use cache'`** opta por
+  render **por petición**; el `generatedAt` se genera en el **servidor en cada request**, así que el
+  timestamp **cambia en cada recarga**. Bajo Cache Components el route es *Partial Prerender* (`◐`):
+  shell estático + contenido dinámico server-streamed. Contrasta con el catálogo (ISR + filtros de
+  cliente): aquí el filtrado es **server-side por petición**.
 - **CSR** (carrito): el timestamp se genera **en el cliente** (en un `useEffect`) y cambia en cada
   interacción. Es lo contrario de las pantallas cacheadas, y por eso no aparece en el HTML estático.
 
@@ -115,13 +121,15 @@ descargar navegadores).
 pnpm nx e2e @onboarding-nx/web-e2e
 ```
 
-3 flujos (4 tests):
+4 flujos (5 tests):
 
 1. **Home (Static)** — renderiza hero + grid; el badge `STATIC` mantiene el **mismo timestamp** tras
    recargar (congelado).
 2. **Catálogo → PDP → carrito** — filtra por marca (la query `?brand=` se actualiza), abre una PDP,
    añade al carrito → el drawer muestra el artículo y el contador del header pasa a 1.
-3. **Revalidación** — `POST /api/revalidate` sin secreto → **401**; con secreto y
+3. **Búsqueda (SSR)** — `/buscar?q=iphone` filtra en servidor; el badge `SSR` **cambia** de timestamp
+   en cada recarga (lo opuesto a Home).
+4. **Revalidación** — `POST /api/revalidate` sin secreto → **401**; con secreto y
    `?tag=device:<slug>` → **200** y, tras revalidar, el timestamp de esa PDP **cambia**
    (stale-while-revalidate).
 
@@ -136,6 +144,7 @@ app/
 │   └── [slug]/
 │       ├── page.tsx                # PDP (dynamic route, cache por slug)
 │       └── actions.ts              # server action → revalidateTag
+├── buscar/page.tsx                 # Búsqueda (SSR, lee searchParams)
 ├── carrito/page.tsx                # Carrito (CSR)
 ├── api/revalidate/route.ts         # revalidación on-demand + secreto
 ├── components/                     # Header, Cart*, FilterBar, Gallery, BuyBox, …

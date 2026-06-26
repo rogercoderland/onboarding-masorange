@@ -51,6 +51,9 @@
 .render-badge--isr {
   --_bg: rgb(37 99 168);
 }
+.render-badge--ssr {
+  --_bg: rgb(13 148 136);
+}
 .render-badge--dynamic {
   --_fg: rgb(var(--color-ink, 26 16 33));
   --_bg: rgb(214 158 46);

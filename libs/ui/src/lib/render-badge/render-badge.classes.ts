@@ -10,6 +10,7 @@ export const renderBadgeClasses = {
   time: 'render-badge__time',
   static: 'render-badge--static',
   isr: 'render-badge--isr',
+  ssr: 'render-badge--ssr',
   dynamic: 'render-badge--dynamic',
   csr: 'render-badge--csr',
 } as const;

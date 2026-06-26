@@ -290,6 +290,23 @@ export function getFeaturedSlugs(): string[] {
   return DEVICES.slice(0, 6).map((d) => d.slug);
 }
 
+export async function searchDevices(query: string) {
+  await delay(400); // Simulate per-request network work.
+  const q = query.trim().toLowerCase();
+  // Empty query → show the full catalog (the default / "cleared" state).
+  const results = q
+    ? DEVICES.filter(
+        (d) =>
+          d.name.toLowerCase().includes(q) || d.brand.toLowerCase().includes(q),
+      )
+    : DEVICES;
+  return {
+    query: q,
+    results,
+    generatedAt: new Date().toISOString(),
+  };
+}
+
 // --- Marketing / layout content (mocked) -------------------------
 const HERO: HeroBanner = {
   title: 'El móvil que quieres, al precio Yoigo',
