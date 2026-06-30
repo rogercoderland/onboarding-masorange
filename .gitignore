@@ -49,7 +49,16 @@ Thumbs.db
 .next
 out
 
+# local env files (never commit secrets)
+.env
+.env*.local
+
 test-output
+
+# Playwright
+playwright-report
+test-results
+.playwright
 
 vite.config.*.timestamp*
 vitest.config.*.timestamp*

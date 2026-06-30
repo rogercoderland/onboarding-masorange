@@ -1,0 +1,112 @@
+.pdp {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.brand {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: rgb(var(--color-ink-muted, 110 100 120));
+}
+
+.name {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: rgb(var(--color-ink, 26 16 33));
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: rgb(var(--color-brand, 158 28 136));
+}
+
+.keySpecs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  list-style: none;
+  margin: 0.5rem 0;
+  padding: 0;
+}
+
+.keySpecs li {
+  display: flex;
+  flex-direction: column;
+}
+
+.specLabel {
+  font-size: 0.75rem;
+  color: rgb(var(--color-ink-muted, 110 100 120));
+}
+
+.specValue {
+  font-weight: 600;
+  color: rgb(var(--color-ink, 26 16 33));
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgb(var(--color-ink, 26 16 33));
+}
+
+.description {
+  color: rgb(var(--color-ink-muted, 110 100 120));
+  line-height: 1.6;
+  max-width: 60ch;
+}
+
+.specsTable {
+  width: 100%;
+  max-width: 480px;
+  border-collapse: collapse;
+}
+
+.specsTable th,
+.specsTable td {
+  text-align: left;
+  padding: 0.625rem 0.75rem;
+  border-bottom: 1px solid rgb(var(--color-surface-muted, 245 243 247));
+}
+
+.specsTable th {
+  color: rgb(var(--color-ink-muted, 110 100 120));
+  font-weight: 600;
+  width: 40%;
+}
+
+.adminHint {
+  color: rgb(var(--color-ink-muted, 110 100 120));
+  font-size: 0.9375rem;
+  max-width: 60ch;
+}

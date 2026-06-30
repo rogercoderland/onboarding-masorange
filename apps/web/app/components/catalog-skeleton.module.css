@@ -1,0 +1,45 @@
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.bar {
+  height: 88px;
+  border-radius: var(--radius-card, 1.25rem);
+  background: rgb(var(--color-surface-muted, 245 243 247));
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  height: 320px;
+  border-radius: var(--radius-card, 1.25rem);
+  background: linear-gradient(
+    100deg,
+    rgb(var(--color-surface-muted, 245 243 247)) 30%,
+    rgb(var(--color-surface, 255 255 255)) 50%,
+    rgb(var(--color-surface-muted, 245 243 247)) 70%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation: none;
+  }
+}

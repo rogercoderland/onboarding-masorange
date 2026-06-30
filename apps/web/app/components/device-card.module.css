@@ -1,0 +1,39 @@
+.card {
+  height: 100%;
+}
+
+.media {
+  aspect-ratio: 1 / 1;
+}
+
+.mediaLink {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.image {
+  object-fit: contain;
+  padding: 1rem;
+}
+
+.titleLink:hover {
+  color: rgb(var(--color-brand, 158 28 136));
+}
+
+.price {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgb(var(--color-ink, 26 16 33));
+}
+
+.cta {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgb(var(--color-brand, 158 28 136));
+}
+
+.cta:hover {
+  text-decoration: underline;
+}

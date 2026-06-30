@@ -1,0 +1,22 @@
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: rgb(var(--color-surface-muted, 245 243 247));
+  border-radius: var(--radius-card, 1.25rem);
+  transition: opacity 0.15s ease;
+}
+
+.bar[data-pending] {
+  opacity: 0.6;
+}
+
+.field {
+  min-width: 200px;
+}
+
+.clear {
+  margin-left: auto;
+}

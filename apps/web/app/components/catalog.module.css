@@ -1,0 +1,17 @@
+.catalog {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.empty {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: rgb(var(--color-ink-muted, 110 100 120));
+}

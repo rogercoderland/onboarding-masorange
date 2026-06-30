@@ -1,0 +1,25 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: rgb(var(--color-ink, 26 16 33));
+}
+
+.subtitle {
+  margin-top: 0.25rem;
+  color: rgb(var(--color-ink-muted, 110 100 120));
+  font-size: 0.9375rem;
+}
