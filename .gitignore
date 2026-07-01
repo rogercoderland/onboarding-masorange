@@ -62,3 +62,5 @@ test-results
 
 vite.config.*.timestamp*
 vitest.config.*.timestamp*
+# Contentful codegen error logs
+contentful-export-error-log-*.json
