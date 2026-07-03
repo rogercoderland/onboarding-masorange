@@ -235,9 +235,6 @@ importers:
 
   libs/contentful/domain:
     dependencies:
-      contentful:
-        specifier: ^11.12.6
-        version: 11.12.6
       zod:
         specifier: ^4.4.3
         version: 4.4.3
