@@ -227,6 +227,45 @@ importers:
 
   apps/web-e2e: {}
 
+  libs/cms/application:
+    dependencies:
+      '@onboarding-nx/cms-domain':
+        specifier: workspace:*
+        version: link:../domain
+
+  libs/cms/domain:
+    dependencies:
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
+
+  libs/cms/infrastructure:
+    dependencies:
+      '@onboarding-nx/cms-domain':
+        specifier: workspace:*
+        version: link:../domain
+      '@onboarding-nx/contentful-application':
+        specifier: workspace:*
+        version: link:../../contentful/application
+      '@onboarding-nx/contentful-domain':
+        specifier: workspace:*
+        version: link:../../contentful/domain
+      '@onboarding-nx/contentful-infrastructure':
+        specifier: workspace:*
+        version: link:../../contentful/infrastructure
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
+
+  libs/cms/presentation:
+    dependencies:
+      '@onboarding-nx/cms-domain':
+        specifier: workspace:*
+        version: link:../domain
+      '@onboarding-nx/ui':
+        specifier: workspace:*
+        version: link:../../ui
+
   libs/contentful/application:
     dependencies:
       '@onboarding-nx/contentful-domain':

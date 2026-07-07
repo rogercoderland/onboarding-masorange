@@ -1,0 +1,45 @@
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 2.5rem;
+  background: rgb(var(--color-surface-muted, 245 243 247));
+  border: 1px solid rgb(var(--color-ink, 26 16 33) / 0.08);
+  border-radius: var(--radius-card, 1.25rem);
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 38rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: rgb(var(--color-ink, 26 16 33));
+}
+
+.description {
+  margin: 0;
+  color: rgb(var(--color-ink-muted, 110 100 120));
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  color: rgb(var(--color-brand-fg, 255 255 255));
+  background: rgb(var(--color-brand, 158 28 136));
+  border-radius: var(--radius-control, 0.625rem);
+}
+
+.cta:hover {
+  opacity: 0.92;
+}
