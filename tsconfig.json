@@ -35,6 +35,18 @@
     },
     {
       "path": "./libs/contentful/infrastructure"
+    },
+    {
+      "path": "./libs/cms/infrastructure"
+    },
+    {
+      "path": "./libs/cms/presentation"
+    },
+    {
+      "path": "./libs/cms/application"
+    },
+    {
+      "path": "./libs/cms/domain"
     }
   ]
 }
