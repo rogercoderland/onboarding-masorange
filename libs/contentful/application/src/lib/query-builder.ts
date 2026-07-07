@@ -8,18 +8,18 @@ import type { GetEntriesQuery } from '@onboarding-nx/contentful-domain';
 
 const DEFAULT_INCLUDE = 2;
 
-export function entriesByType(
+export function entriesByType<TFields = Record<string, unknown>>(
   contentType: string,
-  overrides: Partial<GetEntriesQuery> = {},
-): GetEntriesQuery {
+  overrides: Partial<GetEntriesQuery<TFields>> = {},
+): GetEntriesQuery<TFields> {
   return { content_type: contentType, include: DEFAULT_INCLUDE, ...overrides };
 }
 
-export function entryBySlug(
+export function entryBySlug<TFields = Record<string, unknown>>(
   contentType: string,
   slug: string,
-  overrides: Partial<GetEntriesQuery> = {},
-): GetEntriesQuery {
+  overrides: Partial<GetEntriesQuery<TFields>> = {},
+): GetEntriesQuery<TFields> {
   return {
     content_type: contentType,
     'fields.slug': slug,

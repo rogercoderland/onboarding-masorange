@@ -20,12 +20,22 @@ conoce HTTP; la infraestructura implementa el port.
 
 ```ts
 import { getContentfulConfigFromEnv, ContentfulHttpAdapter } from '@onboarding-nx/contentful-infrastructure';
-import { entryBySlug } from '@onboarding-nx/contentful-application';
-import type { TypePageFields } from '@onboarding-nx/contentful-domain';
+import { pageBySlug, allDevices } from '@onboarding-nx/contentful-application';
 
 const client = new ContentfulHttpAdapter(getContentfulConfigFromEnv());
-const { items, includes } = await client.getEntries<TypePageFields>(entryBySlug('page', 'home'));
+
+// The typed helpers carry the content type *and* its field shape, so the result
+// is inferred — no call-site generic. `page.fields.title` is `string`.
+const { items: [page], includes } = await client.getEntries(pageBySlug('home'));
+const { items: devices } = await client.getEntries(allDevices());
 ```
+
+The generated types (`TypePageFields`, …) are consumed through
+`ResolveFields<T>` (domain), which unwraps the codegen's abstract
+`EntryFieldTypes.*` descriptors into the plain values the CDA returns; the typed
+helpers in `contentful-application` (`pageBySlug`, `allDevices`, `deviceBySlug`,
+and the `PageFields`/`DeviceFields`/… aliases) bind each content-type id to its
+resolved field type.
 
 `getEntries`/`getEntry` devuelven el envelope ya validado por Zod, o lanzan
 `ContentfulApiError` / `ContentfulValidationError`. Para resolver los `includes`

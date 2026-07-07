@@ -35,7 +35,7 @@ export class ContentfulHttpAdapter implements ContentfulClientPort {
   }
 
   async getEntries<TFields = Record<string, unknown>>(
-    query: GetEntriesQuery,
+    query: GetEntriesQuery<TFields>,
   ): Promise<ContentfulCollection<TFields>> {
     const params = new URLSearchParams();
     for (const [key, value] of Object.entries(query)) {
