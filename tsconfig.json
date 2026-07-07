@@ -26,6 +26,15 @@
     },
     {
       "path": "./apps/web-e2e"
+    },
+    {
+      "path": "./libs/contentful/domain"
+    },
+    {
+      "path": "./libs/contentful/application"
+    },
+    {
+      "path": "./libs/contentful/infrastructure"
     }
   ]
 }

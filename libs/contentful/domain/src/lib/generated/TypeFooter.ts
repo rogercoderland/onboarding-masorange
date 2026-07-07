@@ -1,0 +1,20 @@
+import type { ChainModifiers, Entry, EntryFieldTypes, EntrySkeletonType, LocaleCode } from "contentful";
+
+export interface TypeFooterFields {
+    columns?: EntryFieldTypes.Object;
+    legal?: EntryFieldTypes.Symbol;
+}
+
+export type TypeFooterSkeleton = EntrySkeletonType<TypeFooterFields, "footer">;
+export type TypeFooter<Modifiers extends ChainModifiers, Locales extends LocaleCode = LocaleCode> = Entry<TypeFooterSkeleton, Modifiers, Locales>;
+
+export function isTypeFooter<Modifiers extends ChainModifiers, Locales extends LocaleCode>(entry: unknown): entry is TypeFooter<Modifiers, Locales> {
+    const candidate = entry as { sys?: { contentType?: { sys?: { id?: string } } } };
+    return candidate.sys?.contentType?.sys?.id === 'footer'
+}
+
+export type TypeFooterWithoutLinkResolutionResponse = TypeFooter<"WITHOUT_LINK_RESOLUTION">;
+export type TypeFooterWithoutUnresolvableLinksResponse = TypeFooter<"WITHOUT_UNRESOLVABLE_LINKS">;
+export type TypeFooterWithAllLocalesResponse<Locales extends LocaleCode = LocaleCode> = TypeFooter<"WITH_ALL_LOCALES", Locales>;
+export type TypeFooterWithAllLocalesAndWithoutLinkResolutionResponse<Locales extends LocaleCode = LocaleCode> = TypeFooter<"WITHOUT_LINK_RESOLUTION" | "WITH_ALL_LOCALES", Locales>;
+export type TypeFooterWithAllLocalesAndWithoutUnresolvableLinksResponse<Locales extends LocaleCode = LocaleCode> = TypeFooter<"WITHOUT_UNRESOLVABLE_LINKS" | "WITH_ALL_LOCALES", Locales>;

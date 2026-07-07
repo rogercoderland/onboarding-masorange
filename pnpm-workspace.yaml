@@ -3,4 +3,5 @@ packages:
   - 'libs/catalog/*'
   - 'libs/*'
   - 'libs/devices/*'
+  - 'libs/contentful/*'
 autoInstallPeers: true
