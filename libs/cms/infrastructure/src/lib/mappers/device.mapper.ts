@@ -1,7 +1,7 @@
 import { cmsDeviceSchema, type CmsDevice } from '@onboarding-nx/cms-domain';
 import type { ContentfulEntry } from '@onboarding-nx/contentful-domain';
 import type { LinkResolver } from '@onboarding-nx/contentful-infrastructure';
-import { isContentfulLink, resolveAssetUrl } from './links.js';
+import { isContentfulLink, resolveAssetUrl } from './links';
 
 /**
  * Raw `device` entry → clean `CmsDevice`. Resolves the `images` asset links to

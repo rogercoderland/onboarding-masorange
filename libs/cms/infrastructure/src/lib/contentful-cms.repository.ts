@@ -10,8 +10,8 @@ import {
   pageBySlug,
 } from '@onboarding-nx/contentful-application';
 import { createLinkResolver } from '@onboarding-nx/contentful-infrastructure';
-import { mapDevice } from './mappers/device.mapper.js';
-import { mapPage } from './mappers/page.mapper.js';
+import { mapDevice } from './mappers/device.mapper';
+import { mapPage } from './mappers/page.mapper';
 
 /**
  * Implements the CMS business port over the raw `contentful` client. Each call

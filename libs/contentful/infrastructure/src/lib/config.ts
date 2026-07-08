@@ -1,4 +1,4 @@
-import { ContentfulConfigError } from './errors.js';
+import { ContentfulConfigError } from './errors';
 
 export const CONTENTFUL_API = {
   DELIVERY_URL: 'https://cdn.contentful.com',

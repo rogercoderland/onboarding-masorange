@@ -5,7 +5,7 @@ import {
   pageBySlug,
   type DeviceFields,
   type PageFields,
-} from './queries.js';
+} from './queries';
 
 describe('typed queries', () => {
   it('build the expected runtime queries', () => {

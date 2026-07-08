@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useCart } from './cart-context';
 import { formatPrice } from '../lib/format';
 import type { CartLine } from '../lib/models';
@@ -17,13 +16,7 @@ export function CartItem({ line }: CartItemProps) {
   return (
     <div className={styles.item}>
       <div className={styles.media}>
-        <Image
-          src={line.image}
-          alt={line.name}
-          fill
-          sizes="64px"
-          className={styles.image}
-        />
+        <img src={line.image} alt={line.name} className={styles.image} />
       </div>
 
       <div className={styles.info}>

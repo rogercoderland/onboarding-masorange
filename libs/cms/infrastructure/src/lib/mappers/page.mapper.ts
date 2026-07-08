@@ -4,8 +4,8 @@ import type {
   ContentfulEntry,
 } from '@onboarding-nx/contentful-domain';
 import type { LinkResolver } from '@onboarding-nx/contentful-infrastructure';
-import { mapBlock } from './block.mapper.js';
-import { isContentfulLink } from './links.js';
+import { mapBlock } from './block.mapper';
+import { isContentfulLink } from './links';
 
 /**
  * Raw `page` collection (+ its resolved `includes`) → clean `CmsPage`. The

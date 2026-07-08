@@ -1,6 +1,6 @@
-import type { ContentfulConfig } from './config.js';
-import { ContentfulHttpAdapter } from './contentful-http.adapter.js';
-import { ContentfulApiError, ContentfulValidationError } from './errors.js';
+import type { ContentfulConfig } from './config';
+import { ContentfulHttpAdapter } from './contentful-http.adapter';
+import { ContentfulApiError, ContentfulValidationError } from './errors';
 
 const config: ContentfulConfig = {
   spaceId: 'space',

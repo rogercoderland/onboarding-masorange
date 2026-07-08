@@ -7,7 +7,7 @@ import type {
   featureBannerBlockSchema,
   footerBlockSchema,
   heroBannerBlockSchema,
-} from '../schemas/cms-block.schema.js';
+} from '../schemas/cms-block.schema';
 
 /**
  * The block types a `page` can compose, in Contentful content-type id form.

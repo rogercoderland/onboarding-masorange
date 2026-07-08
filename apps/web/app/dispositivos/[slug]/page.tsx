@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { cacheLife, cacheTag } from 'next/cache';
 import { RenderBadge } from '@onboarding-nx/ui';
-import { getDeviceBySlug, getFeaturedSlugs } from '../../lib/mock-api';
+import { getDevice, getDevices } from '../../lib/cms';
 import { CacheTags } from '../../lib/cache-tags';
 import { formatPrice } from '../../lib/format';
 import { Gallery } from '../../components/gallery';
@@ -15,22 +15,23 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-async function getDevice(slug: string) {
+async function getCachedDevice(slug: string) {
   'use cache';
   cacheLife('hours');
   cacheTag(CacheTags.device(slug));
-  return getDeviceBySlug(slug);
+  return { device: await getDevice(slug), generatedAt: new Date().toISOString() };
 }
 
 export async function generateStaticParams() {
-  return getFeaturedSlugs().map((slug) => ({ slug }));
+  const devices = await getDevices();
+  return devices.map((device) => ({ slug: device.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const { device } = await getDevice(slug);
+  const { device } = await getCachedDevice(slug);
   if (!device) return { title: 'Dispositivo no encontrado' };
   return {
     title: `${device.name} — Tienda de dispositivos`,
@@ -40,7 +41,7 @@ export async function generateMetadata({
 
 export default async function DevicePage({ params }: PageProps) {
   const { slug } = await params;
-  const { device, generatedAt } = await getDevice(slug);
+  const { device, generatedAt } = await getCachedDevice(slug);
 
   if (!device) notFound();
 

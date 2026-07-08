@@ -3,6 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "@onboarding-nx/cms-application": "workspace:*",
+    "@onboarding-nx/cms-domain": "workspace:*",
+    "@onboarding-nx/cms-infrastructure": "workspace:*",
+    "@onboarding-nx/cms-presentation": "workspace:*",
+    "@onboarding-nx/contentful-infrastructure": "workspace:*",
     "@onboarding-nx/theme": "workspace:*",
     "@onboarding-nx/ui": "workspace:*",
     "next": "~16.1.6",

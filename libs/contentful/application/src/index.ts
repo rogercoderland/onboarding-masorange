@@ -1,2 +1,2 @@
-export * from './lib/query-builder.js';
-export * from './lib/queries.js';
+export * from './lib/query-builder';
+export * from './lib/queries';

@@ -8,7 +8,7 @@ import type {
   TypeHeroBannerFields,
   TypePageFields,
 } from '@onboarding-nx/contentful-domain';
-import { entriesByType, entryBySlug } from './query-builder.js';
+import { entriesByType, entryBySlug } from './query-builder';
 
 /**
  * Plain field shapes for each content type, derived from the codegen'd types.

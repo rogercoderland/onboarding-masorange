@@ -1,5 +1,5 @@
 import type { ChainModifiers, Entry, EntryFieldTypes, EntrySkeletonType, LocaleCode } from "contentful";
-import type { TypeDeviceSkeleton } from "./TypeDevice.js";
+import type { TypeDeviceSkeleton } from "./TypeDevice";
 
 export interface TypeDeviceGridFields {
     title?: EntryFieldTypes.Symbol;

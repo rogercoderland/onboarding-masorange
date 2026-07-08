@@ -1,7 +1,7 @@
 import {
   contentfulCollectionSchema,
   contentfulEntrySchema,
-} from './contentful-response.schema.js';
+} from './contentful-response.schema';
 
 describe('contentful response schemas', () => {
   it('accepts a well-formed collection with includes', () => {

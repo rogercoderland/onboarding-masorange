@@ -1,4 +1,4 @@
-import type { CmsDevice, CmsPage } from '../models/cms-page.model.js';
+import type { CmsDevice, CmsPage } from '../models/cms-page.model';
 
 /**
  * Driven port: the business view of the CMS. The app depends on this, not on

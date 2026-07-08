@@ -52,6 +52,21 @@
       "path": "../../libs/theme"
     },
     {
+      "path": "../../libs/cms/domain"
+    },
+    {
+      "path": "../../libs/cms/application"
+    },
+    {
+      "path": "../../libs/cms/infrastructure"
+    },
+    {
+      "path": "../../libs/contentful/infrastructure"
+    },
+    {
+      "path": "../../libs/cms/presentation"
+    },
+    {
       "path": "../../libs/ui"
     }
   ]

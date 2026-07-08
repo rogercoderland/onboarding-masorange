@@ -1,27 +1,33 @@
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { cacheLife, cacheTag } from 'next/cache';
 import { RenderBadge } from '@onboarding-nx/ui';
-import { getHomeSections } from './lib/mock-api';
+import { renderBlock } from '@onboarding-nx/cms-presentation';
+import { getPage } from './lib/cms';
 import { CacheTags } from './lib/cache-tags';
-import { HeroBanner } from './components/hero-banner';
-import { FeatureBanner } from './components/feature-banner';
-import { DeviceCard } from './components/device-card';
 import styles from './home.module.css';
 
-/**
- * Screen 01 — Home (Static).
- *
- * `'use cache'` + `cacheLife('max')` make this page fully static: the mock data
- * (and its `generatedAt` timestamp) is captured once at build/first-render and
- * then frozen — reloading the page never changes the timestamp. `cacheTag` lets
- * the revalidate API rebuild it on demand. This mirrors the wireframe's
- * "SSG + ISR" annotation, expressed in the Cache Components idiom.
- */
+export async function generateMetadata(): Promise<Metadata> {
+  'use cache';
+  cacheLife('max');
+  cacheTag(CacheTags.homeSections);
+  const page = await getPage('home');
+  return {
+    title: page?.seo.title ?? page?.title,
+    description: page?.seo.description,
+  };
+}
+
 export default async function HomePage() {
   'use cache';
   cacheLife('max');
   cacheTag(CacheTags.homeSections);
 
-  const { sections, generatedAt } = await getHomeSections();
+  const page = await getPage('home');
+  if (!page) notFound();
+
+  const generatedAt = new Date().toISOString();
+  const sections = page.sections.filter((block) => block.type !== 'footer');
 
   return (
     <div className={styles.page}>
@@ -31,22 +37,7 @@ export default async function HomePage() {
         strategy="use cache · cacheLife('max')"
       />
 
-      <HeroBanner data={sections.hero} />
-
-      <section className={styles.featured}>
-        <h2 className={styles.sectionTitle}>Destacados</h2>
-        <div className={styles.grid}>
-          {sections.featured.map((device, index) => (
-            <DeviceCard
-              key={device.slug}
-              device={device}
-              priority={index === 0}
-            />
-          ))}
-        </div>
-      </section>
-
-      <FeatureBanner data={sections.feature} />
+      {sections.map((block, index) => renderBlock(block, index))}
     </div>
   );
 }

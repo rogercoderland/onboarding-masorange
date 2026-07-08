@@ -1,4 +1,4 @@
-import type { ContentfulLink } from './contentful-entry.model.js';
+import type { ContentfulLink } from './contentful-entry.model';
 
 /**
  * Bridge from the codegen'd Contentful field descriptors to the plain values
