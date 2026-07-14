@@ -6,8 +6,8 @@ import {
 } from '@onboarding-nx/cms-domain';
 import type { ContentfulEntry } from '@onboarding-nx/contentful-domain';
 import type { LinkResolver } from '@onboarding-nx/contentful-infrastructure';
-import { mapDevice } from './device.mapper.js';
-import { isContentfulLink, resolveAssetUrl } from './links.js';
+import { mapDevice } from './device.mapper';
+import { isContentfulLink, resolveAssetUrl } from './links';
 
 /** Resolve an array of entry links to their mapped devices, dropping misses. */
 function resolveDevices(

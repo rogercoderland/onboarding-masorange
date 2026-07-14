@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { cacheLife, cacheTag } from 'next/cache';
 import { RenderBadge } from '@onboarding-nx/ui';
-import { getDevices } from '../lib/mock-api';
+import { getDevices } from '../lib/cms';
 import { CacheTags } from '../lib/cache-tags';
 import { Catalog } from '../components/catalog';
 import { CatalogSkeleton } from '../components/catalog-skeleton';
@@ -15,7 +15,7 @@ async function getCatalog() {
   'use cache';
   cacheLife('catalog');
   cacheTag(CacheTags.devices);
-  return getDevices();
+  return { devices: await getDevices(), generatedAt: new Date().toISOString() };
 }
 
 export default async function CatalogoPage() {

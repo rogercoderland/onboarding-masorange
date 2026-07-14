@@ -1,5 +1,5 @@
 import type { ContentfulIncludes } from '@onboarding-nx/contentful-domain';
-import { createLinkResolver } from './link-resolver.js';
+import { createLinkResolver } from './link-resolver';
 
 const includes = {
   Entry: [{ sys: { id: 'e1', type: 'Entry' }, fields: { name: 'grid' } }],

@@ -50,6 +50,14 @@ CONTENT_DELIVERY_API_KEY=...   # token CDA (runtime)
 CONTENT_PREVIEW_API_KEY=...    # token CPA (opcional)
 ```
 
+### En CI
+
+`next build` prerenderea las páginas del CMS, así que el build necesita el token
+**CDA (read-only)** en el runner. Añade en el repo (Settings → Secrets and
+variables → Actions) los secrets `CONTENTFUL_SPACE_ID` y `CONTENT_DELIVERY_API_KEY`;
+el workflow (`.github/workflows/ci.yml`) los inyecta en el step de build.
+`CONTENTFUL_ENVIRONMENT` va como valor plano (`master`), no es secreto.
+
 ## Generar tipos desde el content model
 
 ```bash

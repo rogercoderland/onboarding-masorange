@@ -1,7 +1,7 @@
 import type {
   ContentfulCollection,
   ContentfulEntry,
-} from '../models/contentful-entry.model.js';
+} from '../models/contentful-entry.model';
 
 declare const FIELDS: unique symbol;
 

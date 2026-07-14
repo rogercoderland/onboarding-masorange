@@ -2,8 +2,8 @@
 
 import { useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { DeviceCard } from '@onboarding-nx/cms-presentation';
 import type { Device } from '../lib/models';
-import { DeviceCard } from './device-card';
 import { FilterBar, type SortOrder } from './filter-bar';
 import { Pagination } from './pagination';
 import styles from './catalog.module.css';

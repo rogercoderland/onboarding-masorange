@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
 import { RenderBadge } from '@onboarding-nx/ui';
-import { searchDevices } from '../lib/mock-api';
-import { DeviceCard } from '../components/device-card';
+import { DeviceCard } from '@onboarding-nx/cms-presentation';
+import { getDevices } from '../lib/cms';
 import styles from './buscar.module.css';
 
 interface PageProps {
@@ -16,7 +16,16 @@ async function SearchResults({ searchParams }: PageProps) {
   // Server-side validation/sanitization of user input.
   const query = q.trim().slice(0, MAX_QUERY);
 
-  const { results, generatedAt } = await searchDevices(query);
+  const devices = await getDevices();
+  const lower = query.toLowerCase();
+  const results = lower
+    ? devices.filter(
+        (d) =>
+          d.name.toLowerCase().includes(lower) ||
+          d.brand.toLowerCase().includes(lower),
+      )
+    : devices;
+  const generatedAt = new Date().toISOString();
 
   return (
     <>

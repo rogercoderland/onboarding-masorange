@@ -6,8 +6,8 @@ import {
   type ContentfulEntry,
   type GetEntriesQuery,
 } from '@onboarding-nx/contentful-domain';
-import { CONTENTFUL_API, type ContentfulConfig } from './config.js';
-import { ContentfulApiError, ContentfulValidationError } from './errors.js';
+import { CONTENTFUL_API, type ContentfulConfig } from './config';
+import { ContentfulApiError, ContentfulValidationError } from './errors';
 
 /**
  * Driven adapter that implements `ContentfulClientPort` over the Content

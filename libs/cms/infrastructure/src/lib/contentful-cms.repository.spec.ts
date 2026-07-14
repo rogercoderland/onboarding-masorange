@@ -2,7 +2,7 @@ import type {
   ContentfulClientPort,
   ContentfulCollection,
 } from '@onboarding-nx/contentful-domain';
-import { ContentfulCmsRepository } from './contentful-cms.repository.js';
+import { ContentfulCmsRepository } from './contentful-cms.repository';
 
 const link = (id: string) => ({ sys: { type: 'Link', linkType: 'Entry', id } });
 const assetLink = (id: string) => ({

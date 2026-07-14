@@ -1,7 +1,7 @@
 import type { CmsDevice, CmsPage, CmsRepository } from '@onboarding-nx/cms-domain';
-import { GetPageBySlug } from './get-page-by-slug.usecase.js';
-import { GetDevices } from './get-devices.usecase.js';
-import { GetDeviceBySlug } from './get-device-by-slug.usecase.js';
+import { GetPageBySlug } from './get-page-by-slug.usecase';
+import { GetDevices } from './get-devices.usecase';
+import { GetDeviceBySlug } from './get-device-by-slug.usecase';
 
 const device: CmsDevice = {
   slug: 'x',

@@ -209,6 +209,21 @@ importers:
 
   apps/web:
     dependencies:
+      '@onboarding-nx/cms-application':
+        specifier: workspace:*
+        version: link:../../libs/cms/application
+      '@onboarding-nx/cms-domain':
+        specifier: workspace:*
+        version: link:../../libs/cms/domain
+      '@onboarding-nx/cms-infrastructure':
+        specifier: workspace:*
+        version: link:../../libs/cms/infrastructure
+      '@onboarding-nx/cms-presentation':
+        specifier: workspace:*
+        version: link:../../libs/cms/presentation
+      '@onboarding-nx/contentful-infrastructure':
+        specifier: workspace:*
+        version: link:../../libs/contentful/infrastructure
       '@onboarding-nx/theme':
         specifier: workspace:*
         version: link:../../libs/theme

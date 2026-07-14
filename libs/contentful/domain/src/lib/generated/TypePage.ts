@@ -1,8 +1,8 @@
 import type { ChainModifiers, Entry, EntryFieldTypes, EntrySkeletonType, LocaleCode } from "contentful";
-import type { TypeDeviceGridSkeleton } from "./TypeDeviceGrid.js";
-import type { TypeFeatureBannerSkeleton } from "./TypeFeatureBanner.js";
-import type { TypeFooterSkeleton } from "./TypeFooter.js";
-import type { TypeHeroBannerSkeleton } from "./TypeHeroBanner.js";
+import type { TypeDeviceGridSkeleton } from "./TypeDeviceGrid";
+import type { TypeFeatureBannerSkeleton } from "./TypeFeatureBanner";
+import type { TypeFooterSkeleton } from "./TypeFooter";
+import type { TypeHeroBannerSkeleton } from "./TypeHeroBanner";
 
 export interface TypePageFields {
     title?: EntryFieldTypes.Symbol;

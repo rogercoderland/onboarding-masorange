@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import styles from './gallery.module.css';
 
 export interface GalleryProps {
@@ -16,14 +15,7 @@ export function Gallery({ images, alt }: GalleryProps) {
   return (
     <div className={styles.gallery}>
       <div className={styles.main}>
-        <Image
-          src={main}
-          alt={alt}
-          fill
-          sizes="(max-width: 768px) 100vw, 480px"
-          priority
-          className={styles.image}
-        />
+        <img src={main} alt={alt} className={styles.image} />
       </div>
 
       {images.length > 1 && (
@@ -39,13 +31,7 @@ export function Gallery({ images, alt }: GalleryProps) {
                 .join(' ')}
               onClick={() => setActive(i)}
             >
-              <Image
-                src={src}
-                alt=""
-                fill
-                sizes="64px"
-                className={styles.image}
-              />
+              <img src={src} alt="" className={styles.image} />
             </button>
           ))}
         </div>

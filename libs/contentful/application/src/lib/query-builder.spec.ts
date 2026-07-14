@@ -1,4 +1,4 @@
-import { entriesByType, entryBySlug } from './query-builder.js';
+import { entriesByType, entryBySlug } from './query-builder';
 
 describe('query-builder', () => {
   it('builds a by-type query with a default include depth', () => {

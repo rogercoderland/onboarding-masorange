@@ -2,7 +2,7 @@ import {
   cmsBlockSchema,
   cmsDeviceSchema,
   heroBannerBlockSchema,
-} from './cms-block.schema.js';
+} from './cms-block.schema';
 
 describe('cms block schemas', () => {
   it('parses a valid hero banner block', () => {
