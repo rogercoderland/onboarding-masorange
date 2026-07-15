@@ -1,6 +1,7 @@
 'use client';
 
 import { Modal } from '@onboarding-nx/ui';
+import { useNumberFlag } from '@onboarding-nx/configcat';
 import { useCart } from './cart-context';
 import { CartItem } from './cart-item';
 import { CheckoutPanel } from './checkout-panel';
@@ -11,7 +12,11 @@ import styles from './cart-drawer.module.css';
  * its open state lives in the cart context so any "add to cart" opens it.
  */
 export function CartDrawer() {
-  const { items, isOpen, closeCart } = useCart();
+  const { items, count, isOpen, closeCart } = useCart();
+  // `max_items` number flag: order-size limit tunable from the dashboard
+  // (e.g. to throttle promos) without redeploying.
+  const maxItems = useNumberFlag('max_items', 10);
+  const overLimit = count > maxItems;
 
   return (
     <Modal
@@ -26,13 +31,20 @@ export function CartDrawer() {
       {items.length === 0 ? (
         <p className={styles.empty}>Tu carrito está vacío.</p>
       ) : (
-        <ul className={styles.list}>
-          {items.map((line) => (
-            <li key={line.sku}>
-              <CartItem line={line} />
-            </li>
-          ))}
-        </ul>
+        <>
+          {overLimit && (
+            <p className={styles.limit} role="alert">
+              Máximo {maxItems} artículos por pedido (llevas {count}).
+            </p>
+          )}
+          <ul className={styles.list}>
+            {items.map((line) => (
+              <li key={line.sku}>
+                <CartItem line={line} />
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </Modal>
   );

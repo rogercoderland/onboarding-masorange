@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@onboarding-nx/ui';
+import { useStringFlag } from '@onboarding-nx/configcat';
 import { useCart } from './cart-context';
 import { CartSummary } from './cart-summary';
 import styles from './checkout-panel.module.css';
@@ -19,6 +20,9 @@ export interface CheckoutPanelProps {
 export function CheckoutPanel({ onClose }: CheckoutPanelProps) {
   const { items, clear } = useCart();
   const [done, setDone] = useState(false);
+  // A/B-style experiment: the CTA color comes from the `button_color` string
+  // flag (empty default = keep the theme's primary color).
+  const buttonColor = useStringFlag('button_color', '');
 
   if (done && items.length === 0) {
     return (
@@ -33,6 +37,7 @@ export function CheckoutPanel({ onClose }: CheckoutPanelProps) {
         variant="primary"
         size="lg"
         disabled={items.length === 0}
+        style={buttonColor ? { background: buttonColor } : undefined}
         onClick={() => {
           clear();
           setDone(true);

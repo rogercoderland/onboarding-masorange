@@ -221,6 +221,9 @@ importers:
       '@onboarding-nx/cms-presentation':
         specifier: workspace:*
         version: link:../../libs/cms/presentation
+      '@onboarding-nx/configcat':
+        specifier: workspace:*
+        version: link:../../libs/configcat
       '@onboarding-nx/contentful-infrastructure':
         specifier: workspace:*
         version: link:../../libs/contentful/infrastructure
