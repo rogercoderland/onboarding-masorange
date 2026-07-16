@@ -20,8 +20,6 @@ export interface CheckoutPanelProps {
 export function CheckoutPanel({ onClose }: CheckoutPanelProps) {
   const { items, clear } = useCart();
   const [done, setDone] = useState(false);
-  // A/B-style experiment: the CTA color comes from the `button_color` string
-  // flag (empty default = keep the theme's primary color).
   const buttonColor = useStringFlag('button_color', '');
 
   if (done && items.length === 0) {

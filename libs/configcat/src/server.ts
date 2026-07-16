@@ -1,7 +1,3 @@
-// Server entry point (SSR): Server Components and Route Handlers.
-// Import as: import { ... } from '@onboarding-nx/configcat/server'
-// This entry point does NOT import React nor the CSR client.
-
 export type {
   FeatureFlagValue,
   FeatureFlags,

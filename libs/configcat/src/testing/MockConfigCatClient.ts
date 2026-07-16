@@ -1,20 +1,5 @@
 import type { IConfigCatClient, FeatureFlagValue, FeatureFlags, ConfigCatUser } from '../types';
 
-/**
- * Mock adapter of the IConfigCatClient port for tests: no network, flags
- * are whatever you set. This is the payoff of the hexagonal port — tests
- * exercise the real Provider/hooks against a fake client.
- *
- * @example
- * ```tsx
- * const mockClient = new MockConfigCatClient({ show_new_feature: true });
- * render(
- *   <TestConfigCatProvider client={mockClient}>
- *     <MyComponent />
- *   </TestConfigCatProvider>
- * );
- * ```
- */
 export class MockConfigCatClient implements IConfigCatClient {
   private flags: FeatureFlags;
   private user: ConfigCatUser | undefined;
@@ -50,7 +35,7 @@ export class MockConfigCatClient implements IConfigCatClient {
   }
 
   async refresh(): Promise<void> {
-    // No-op for mock
+    return;
   }
 
   setUser(user: ConfigCatUser | undefined): void {
@@ -69,29 +54,22 @@ export class MockConfigCatClient implements IConfigCatClient {
     this.ready = false;
   }
 
-  // --- Test utilities ---
-
-  /** Set a single flag value. */
   setFlag(key: string, value: FeatureFlagValue): void {
     this.flags[key] = value;
   }
 
-  /** Merge multiple flags at once. */
   setFlags(flags: FeatureFlags): void {
     this.flags = { ...this.flags, ...flags };
   }
 
-  /** Remove all flags. */
   clearFlags(): void {
     this.flags = {};
   }
 
-  /** Whether init() was called. */
   wasInitCalled(): boolean {
     return this.initCalled;
   }
 
-  /** Simulate a not-ready client. */
   setReady(ready: boolean): void {
     this.ready = ready;
   }

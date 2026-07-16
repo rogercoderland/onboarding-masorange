@@ -11,7 +11,6 @@ import {
 } from '@onboarding-nx/configcat';
 import styles from './flags.module.css';
 
-/** Demo identities to exercise the targeting rule on `show_new_feature`. */
 const DEMO_USERS: Array<{ label: string; user: ConfigCatUser | undefined }> = [
   { label: 'Anónimo', user: undefined },
   {
@@ -24,10 +23,6 @@ const DEMO_USERS: Array<{ label: string; user: ConfigCatUser | undefined }> = [
   },
 ];
 
-/**
- * Client section of the demo: live flag values via the three typed hooks,
- * a user selector to demo targeting, and a collapsible debug panel (extra).
- */
 export function FlagsPanel() {
   const { getAllFlags, setUser, user, isReady, refresh } = useConfigCat();
   const showNewFeature = useBooleanFlag('show_new_feature');
@@ -71,9 +66,15 @@ export function FlagsPanel() {
         </thead>
         <tbody>
           <tr>
-            <td><code>show_new_feature</code></td>
-            <td><code>useBooleanFlag</code></td>
-            <td><code>{String(showNewFeature)}</code></td>
+            <td>
+              <code>show_new_feature</code>
+            </td>
+            <td>
+              <code>useBooleanFlag</code>
+            </td>
+            <td>
+              <code>{String(showNewFeature)}</code>
+            </td>
             <td>
               <span className={showNewFeature ? styles.on : styles.off}>
                 {showNewFeature ? 'ON' : 'OFF'}
@@ -81,9 +82,15 @@ export function FlagsPanel() {
             </td>
           </tr>
           <tr>
-            <td><code>button_color</code></td>
-            <td><code>useStringFlag</code></td>
-            <td><code>{buttonColor}</code></td>
+            <td>
+              <code>button_color</code>
+            </td>
+            <td>
+              <code>useStringFlag</code>
+            </td>
+            <td>
+              <code>{buttonColor}</code>
+            </td>
             <td>
               <span
                 className={styles.swatch}
@@ -93,9 +100,15 @@ export function FlagsPanel() {
             </td>
           </tr>
           <tr>
-            <td><code>max_items</code></td>
-            <td><code>useNumberFlag</code></td>
-            <td><code>{maxItems}</code></td>
+            <td>
+              <code>max_items</code>
+            </td>
+            <td>
+              <code>useNumberFlag</code>
+            </td>
+            <td>
+              <code>{maxItems}</code>
+            </td>
             <td>—</td>
           </tr>
         </tbody>
@@ -105,11 +118,17 @@ export function FlagsPanel() {
         <h3 className={styles.subheading}>User targeting</h3>
         <p className={styles.hint}>
           Elige una identidad y observa <code>show_new_feature</code>: la regla
-          del dashboard lo enciende solo para emails <code>@masorange.com</code>.
+          del dashboard lo enciende solo para emails <code>@masorange.com</code>
+          .
         </p>
-        <div className={styles.userRow} role="group" aria-label="Identidad de usuario">
+        <div
+          className={styles.userRow}
+          role="group"
+          aria-label="Identidad de usuario"
+        >
           {DEMO_USERS.map(({ label, user: demoUser }) => {
-            const isActive = (user?.identifier ?? '') === (demoUser?.identifier ?? '');
+            const isActive =
+              (user?.identifier ?? '') === (demoUser?.identifier ?? '');
             return (
               <Button
                 key={label}
@@ -125,15 +144,18 @@ export function FlagsPanel() {
         </div>
       </div>
 
-      {/* Extra: debug panel — native <details>, no extra state needed */}
       <details className={styles.debug}>
         <summary className={styles.debugSummary}>Debug panel</summary>
         <dl className={styles.debugGrid}>
           <dt>isReady</dt>
-          <dd><code>{String(isReady)}</code></dd>
+          <dd>
+            <code>{String(isReady)}</code>
+          </dd>
           <dt>Usuario actual</dt>
           <dd>
-            <code>{user ? JSON.stringify(user) : 'sin contexto (anónimo)'}</code>
+            <code>
+              {user ? JSON.stringify(user) : 'sin contexto (anónimo)'}
+            </code>
           </dd>
           <dt>getAllFlags()</dt>
           <dd>

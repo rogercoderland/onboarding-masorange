@@ -13,8 +13,6 @@ import styles from './cart-drawer.module.css';
  */
 export function CartDrawer() {
   const { items, count, isOpen, closeCart } = useCart();
-  // `max_items` number flag: order-size limit tunable from the dashboard
-  // (e.g. to throttle promos) without redeploying.
   const maxItems = useNumberFlag('max_items', 10);
   const overLimit = count > maxItems;
 

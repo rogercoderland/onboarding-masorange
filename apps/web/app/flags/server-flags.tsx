@@ -9,11 +9,6 @@ export const SERVER_FLAG_DEFINITIONS = {
   maxItems: { key: 'max_items', defaultValue: 10 },
 } as const;
 
-/**
- * Server Component that resolves flags per request. `await connection()`
- * marks it dynamic: with cacheComponents enabled, Next would otherwise try
- * to prerender this I/O at build time (and flag toggles would never show).
- */
 export async function ServerFlags() {
   await connection();
 
@@ -47,9 +42,13 @@ export async function ServerFlags() {
         </thead>
         <tbody>
           <tr>
-            <td><code>show_new_feature</code></td>
+            <td>
+              <code>show_new_feature</code>
+            </td>
             <td>boolean</td>
-            <td><code>{String(flags.showNewFeature)}</code></td>
+            <td>
+              <code>{String(flags.showNewFeature)}</code>
+            </td>
             <td>
               <span className={flags.showNewFeature ? styles.on : styles.off}>
                 {flags.showNewFeature ? 'ON' : 'OFF'}
@@ -57,9 +56,13 @@ export async function ServerFlags() {
             </td>
           </tr>
           <tr>
-            <td><code>button_color</code></td>
+            <td>
+              <code>button_color</code>
+            </td>
             <td>string</td>
-            <td><code>{flags.buttonColor}</code></td>
+            <td>
+              <code>{flags.buttonColor}</code>
+            </td>
             <td>
               <span
                 className={styles.swatch}
@@ -69,9 +72,13 @@ export async function ServerFlags() {
             </td>
           </tr>
           <tr>
-            <td><code>max_items</code></td>
+            <td>
+              <code>max_items</code>
+            </td>
             <td>number</td>
-            <td><code>{flags.maxItems}</code></td>
+            <td>
+              <code>{flags.maxItems}</code>
+            </td>
             <td>—</td>
           </tr>
         </tbody>

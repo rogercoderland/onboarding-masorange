@@ -3,7 +3,6 @@
 import { useState, useCallback, useMemo, type ReactNode } from 'react';
 
 import { MockConfigCatClient } from './MockConfigCatClient';
-// The SAME context as the real provider, so hooks work unchanged in tests
 import { ConfigCatContext } from '../context/ConfigCatProvider';
 
 import type {
@@ -14,31 +13,13 @@ import type {
 } from '../types';
 
 interface TestConfigCatProviderProps {
-  /** Pre-configured mock client (for fine-grained control) */
   client?: MockConfigCatClient;
-  /** Shorthand: pass flag values directly instead of a client */
   flags?: FeatureFlags;
-  /** Initial user context */
   user?: ConfigCatUser;
-  /** Whether the client is ready immediately (default: true) */
   isReady?: boolean;
-  /** Children components */
   children: ReactNode;
 }
 
-/**
- * Drop-in test replacement for ConfigCatProvider backed by a
- * MockConfigCatClient. No network, no polling.
- *
- * @example
- * ```tsx
- * render(
- *   <TestConfigCatProvider flags={{ show_new_feature: true }}>
- *     <MyComponent />
- *   </TestConfigCatProvider>
- * );
- * ```
- */
 export function TestConfigCatProvider({
   client: providedClient,
   flags = {},

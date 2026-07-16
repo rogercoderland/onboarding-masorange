@@ -8,12 +8,6 @@ import type {
   ConfigCatClientOptions,
 } from '../types';
 
-/**
- * Server-Side Rendering adapter over `configcat-js-ssr`.
- * ManualPoll mode: a server process should not keep a polling timer alive;
- * instead we `forceRefreshAsync()` before reading so every request sees
- * fresh values.
- */
 export class ConfigCatClientSSR implements IConfigCatClient {
   private client: configcat.IConfigCatClient | null = null;
   private options: ConfigCatClientOptions;

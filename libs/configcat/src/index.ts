@@ -1,6 +1,3 @@
-// Main entry point (CSR): browser / React components.
-// Import as: import { ... } from '@onboarding-nx/configcat'
-
 export type {
   FeatureFlagValue,
   FeatureFlags,

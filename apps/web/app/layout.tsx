@@ -24,11 +24,6 @@ export default function RootLayout({
           rendered on the server and passed through as a prop — so Home/Catálogo
           keep their Static/ISR rendering. Only the cart UI is client-side.
         */}
-        {/*
-          ConfigCatProvider is also a client boundary. NEXT_PUBLIC_* vars are
-          inlined at build time, so the SDK key is readable here and in the
-          browser bundle (it is public by design — flags are not secrets).
-        */}
         <ConfigCatProvider
           sdkKey={process.env.NEXT_PUBLIC_CONFIGCAT_SDK_KEY ?? ''}
         >

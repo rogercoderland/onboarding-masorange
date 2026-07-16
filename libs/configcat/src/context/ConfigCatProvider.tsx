@@ -20,37 +20,16 @@ import type {
 } from '../types';
 
 export interface ConfigCatProviderProps {
-  /** SDK key from the ConfigCat dashboard */
   sdkKey: string;
-  /** Polling interval in seconds (default: 60) */
   pollIntervalSeconds?: number;
-  /** Initial user context for targeting */
   user?: ConfigCatUser;
-  /** Fallback values when the remote config is unavailable */
   defaultValues?: FeatureFlags;
-  /** Enable debug logging */
   debug?: boolean;
-  /** Children components */
   children: ReactNode;
 }
 
 const ConfigCatContext = createContext<ConfigCatContextValue | null>(null);
 
-/**
- * Provider that initializes the CSR ConfigCat client and exposes flags to
- * the React tree. Place it at the root of the app (layout.tsx).
- *
- * Fail-soft by design: with an empty `sdkKey` the app still renders and
- * every flag resolves to its default value (the SDK key is public, but we
- * never want a missing env var to take the site down).
- *
- * @example
- * ```tsx
- * <ConfigCatProvider sdkKey={process.env.NEXT_PUBLIC_CONFIGCAT_SDK_KEY ?? ''}>
- *   <App />
- * </ConfigCatProvider>
- * ```
- */
 export function ConfigCatProvider({
   sdkKey,
   pollIntervalSeconds = 60,
@@ -62,7 +41,6 @@ export function ConfigCatProvider({
   const [client, setClient] = useState<ConfigCatClientCSR | null>(null);
   const [isReady, setIsReady] = useState(false);
   const [user, setUser] = useState<ConfigCatUser | undefined>(initialUser);
-  // Increments whenever flags may have changed, so consumers re-render
   const [updateTrigger, setUpdateTrigger] = useState(0);
 
   const hasValidSdkKey = Boolean(sdkKey && sdkKey.trim().length > 0);
@@ -84,8 +62,6 @@ export function ConfigCatProvider({
       debug,
     });
 
-    // AutoPoll updates the client cache in the background; without this
-    // subscription React would never re-render on dashboard toggles.
     configCatClient.setOnFlagsChanged(() => {
       setUpdateTrigger((prev) => prev + 1);
     });
@@ -98,12 +74,9 @@ export function ConfigCatProvider({
     return () => {
       configCatClient.dispose();
     };
-    // defaultValues is intentionally excluded: it is a config-time constant
-    // and would re-create the client on every render if passed inline.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sdkKey, hasValidSdkKey, pollIntervalSeconds, debug]);
 
-  // Push user changes into the client so targeting rules re-evaluate
   useEffect(() => {
     if (client) {
       client.setUser(user);
@@ -118,7 +91,6 @@ export function ConfigCatProvider({
       }
       return client.getValueSync(key, defaultValue);
     },
-    // updateTrigger invalidates the callback when the cache changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [client, defaultValues, updateTrigger]
   );
@@ -157,9 +129,6 @@ export function ConfigCatProvider({
   return <ConfigCatContext.Provider value={contextValue}>{children}</ConfigCatContext.Provider>;
 }
 
-/**
- * Access the ConfigCat context. Must be used within a ConfigCatProvider.
- */
 export function useConfigCatContext(): ConfigCatContextValue {
   const context = useContext(ConfigCatContext);
 

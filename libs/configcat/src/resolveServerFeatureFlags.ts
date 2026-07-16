@@ -16,7 +16,6 @@ export type ResolvedServerFeatureFlags<T extends ServerFeatureFlagDefinitions> =
 interface ResolveServerFeatureFlagsOptions<T extends ServerFeatureFlagDefinitions> {
   sdkKey: string;
   flags: T;
-  /** Optional user context so targeting rules also apply server-side */
   user?: ConfigCatUser;
 }
 
@@ -30,32 +29,12 @@ function getDefaultFlags<T extends ServerFeatureFlagDefinitions>(
   ) as ResolvedServerFeatureFlags<T>;
 }
 
-/** Extract the ConfigCat keys of a flag definition map (useful for cache tags). */
 export function getServerFeatureFlagKeys<T extends ServerFeatureFlagDefinitions>(
   flags: T
 ): string[] {
   return Object.values(flags).map((definition) => definition.key);
 }
 
-/**
- * Resolve a typed map of feature flags on the server with an ephemeral SSR
- * client: init (one fetch) → read all values → dispose. Designed for
- * per-request usage in Server Components and Route Handlers.
- *
- * Fail-soft: with an empty `sdkKey` it returns the default values.
- *
- * @example
- * ```ts
- * const flags = await resolveServerFeatureFlags({
- *   sdkKey: process.env.CONFIGCAT_SDK_KEY ?? '',
- *   flags: {
- *     showNewFeature: { key: 'show_new_feature', defaultValue: false },
- *     maxItems: { key: 'max_items', defaultValue: 10 },
- *   },
- * });
- * flags.showNewFeature; // boolean
- * ```
- */
 export async function resolveServerFeatureFlags<T extends ServerFeatureFlagDefinitions>({
   sdkKey,
   flags,

@@ -9,11 +9,6 @@ export const metadata = {
     'Demo de feature flags con ConfigCat: valores en CSR (AutoPoll) y SSR (por petición), targeting por usuario y panel de debug.',
 };
 
-/**
- * Demo page for Unit 5. The static shell prerenders; the server flags
- * section is per-request (see server-flags.tsx) so a dashboard toggle +
- * reload always shows fresh SSR values.
- */
 export default function FlagsPage() {
   return (
     <div className={styles.page}>
@@ -27,7 +22,9 @@ export default function FlagsPage() {
       </header>
 
       <Suspense
-        fallback={<p className={styles.loading}>Resolviendo flags en el servidor…</p>}
+        fallback={
+          <p className={styles.loading}>Resolviendo flags en el servidor…</p>
+        }
       >
         <ServerFlags />
       </Suspense>

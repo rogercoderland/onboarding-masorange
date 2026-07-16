@@ -10,19 +10,12 @@ import type {
   ConfigCatClientOptions,
 } from '../types';
 
-/**
- * Client-Side Rendering adapter over `configcat-js`.
- * AutoPoll mode: the SDK re-fetches the config every `pollIntervalSeconds`
- * and fires `configChanged`, which refreshes the local cache so that
- * `getValueSync` stays cheap for React renders.
- */
 export class ConfigCatClientCSR implements IConfigCatClient {
   private client: configcat.IConfigCatClient | null = null;
   private options: ConfigCatClientOptions;
   private user: ConfigCatUser | undefined;
   private ready = false;
   private cachedFlags: FeatureFlags = {};
-  /** Notifies the Provider when the polled config changes, so React re-renders. */
   private onFlagsChanged: (() => void) | undefined;
 
   constructor(options: ConfigCatClientOptions) {
@@ -33,7 +26,6 @@ export class ConfigCatClientCSR implements IConfigCatClient {
     };
   }
 
-  /** Register a listener invoked whenever the cached flags are updated. */
   setOnFlagsChanged(listener: (() => void) | undefined): void {
     this.onFlagsChanged = listener;
   }
@@ -75,14 +67,13 @@ export class ConfigCatClientCSR implements IConfigCatClient {
     if (!this.client) return;
 
     try {
-      // getAllValueDetailsAsync preserves the real type of each flag
       const allDetails = await this.client.getAllValueDetailsAsync(
         this.toConfigCatUser(this.user)
       );
       const flags: FeatureFlags = {};
 
       for (const detail of allDetails) {
-        if (!this.client) return; // disposed mid-iteration
+        if (!this.client) return;
         if (detail.value !== undefined && detail.value !== null) {
           flags[detail.key] = detail.value;
         }
@@ -166,7 +157,6 @@ export class ConfigCatClientCSR implements IConfigCatClient {
 
   setUser(user: ConfigCatUser | undefined): void {
     this.user = user;
-    // Targeting rules depend on the user: re-evaluate the cache
     this.updateCachedFlags();
   }
 
