@@ -64,6 +64,9 @@
       "path": "../../libs/contentful/infrastructure"
     },
     {
+      "path": "../../libs/configcat"
+    },
+    {
       "path": "../../libs/cms/presentation"
     },
     {

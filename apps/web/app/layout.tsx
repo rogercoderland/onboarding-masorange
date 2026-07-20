@@ -1,4 +1,5 @@
 import './global.css';
+import { ConfigCatProvider } from '@onboarding-nx/configcat';
 import { Header } from './components/header';
 import { SiteFooter } from './components/site-footer';
 import { CartProvider } from './components/cart-context';
@@ -23,12 +24,16 @@ export default function RootLayout({
           rendered on the server and passed through as a prop — so Home/Catálogo
           keep their Static/ISR rendering. Only the cart UI is client-side.
         */}
-        <CartProvider>
-          <Header />
-          <main className="app-main">{children}</main>
-          <SiteFooter />
-          <CartDrawer />
-        </CartProvider>
+        <ConfigCatProvider
+          sdkKey={process.env.NEXT_PUBLIC_CONFIGCAT_SDK_KEY ?? ''}
+        >
+          <CartProvider>
+            <Header />
+            <main className="app-main">{children}</main>
+            <SiteFooter />
+            <CartDrawer />
+          </CartProvider>
+        </ConfigCatProvider>
       </body>
     </html>
   );

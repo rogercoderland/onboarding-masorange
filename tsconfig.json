@@ -47,6 +47,9 @@
     },
     {
       "path": "./libs/cms/domain"
+    },
+    {
+      "path": "./libs/configcat"
     }
   ]
 }

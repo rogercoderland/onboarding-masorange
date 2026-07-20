@@ -15,6 +15,26 @@ La **Unit 3 — Minimal App** (patrones de render de Next + Cache Components) es
 README de la app: [`apps/web/README.md`](./apps/web/README.md) — las 4 pantallas, su estrategia de
 caché, el server action, la API de revalidación y los resultados de Lighthouse.
 
+## Unit 5 — ConfigCat feature flags
+
+La lib [`libs/configcat`](./libs/configcat/README.md) (`@onboarding-nx/configcat`) replica la
+`@digital/configcat` del monorepo: port `IConfigCatClient` + adapters CSR/SSR/Mock, Provider +
+hooks tipados y helper SSR. Demo en **`/flags`** (valores CSR y SSR, targeting por usuario y debug
+panel); además `show_new_feature` controla el banner del header, `button_color` el CTA del checkout
+y `max_items` el límite del carrito.
+
+Setup manual (dashboard de ConfigCat):
+
+1. Cuenta gratis en <https://app.configcat.com/signup>.
+2. En el Config por defecto, crear 3 flags: `show_new_feature` (boolean, OFF), `button_color`
+   (text, `blue`), `max_items` (whole number, `10`).
+3. Copiar la **SDK Key** (Config → SDK Key) en `.env.local`:
+   `NEXT_PUBLIC_CONFIGCAT_SDK_KEY` y `CONFIGCAT_SDK_KEY` (misma key; ver `.env.example`).
+4. Targeting: en `show_new_feature`, regla `IF Email CONTAINS @masorange.com → ON`, resto OFF.
+   Probar en `/flags` cambiando de identidad.
+
+Sin SDK key la app sigue funcionando con los valores por defecto (fail-soft del Provider).
+
 ## Estructura
 
 ```text
@@ -26,6 +46,8 @@ onboarding-nx/
 │                                #   → @onboarding-nx/panel
 └── libs/
     ├── ui/                      # lib de componentes React (Vitest)   → @onboarding-nx/ui
+    ├── configcat/               # feature flags ConfigCat (port + adapters CSR/SSR/Mock)
+    │                            #   → @onboarding-nx/configcat (Unit 5)
     └── devices/                 # bounded context partido en capas hexagonales
         ├── domain/              # @onboarding-nx/domain          (TS puro: modelos + ports)
         ├── application/         # @onboarding-nx/application     (casos de uso; depende de domain)

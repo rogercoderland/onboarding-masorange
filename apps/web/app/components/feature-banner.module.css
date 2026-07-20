@@ -1,0 +1,13 @@
+.banner {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  text-align: center;
+  color: rgb(var(--color-surface, 255 255 255));
+  background: rgb(var(--color-ink, 26 16 33));
+}
+
+.link {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+}
