@@ -21,10 +21,9 @@ export function Header() {
           <Link href="/dispositivos">Dispositivos</Link>
           <Link href="/buscar">Buscar</Link>
           <Link href="/flags">Flags</Link>
+          <Link href="/error-test">Error test</Link>
         </nav>
 
-        {/* The cart icon navigates to the full /carrito page; the drawer is a
-            transient mini-cart that opens only after adding a product. */}
         <Link
           href="/carrito"
           className={styles.cart}

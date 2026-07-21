@@ -35,6 +35,33 @@ Setup manual (dashboard de ConfigCat):
 
 Sin SDK key la app sigue funcionando con los valores por defecto (fail-soft del Provider).
 
+## Unit 6 — Grafana Faro / observabilidad frontend
+
+La lib [`libs/observability`](./libs/observability/README.md)
+(`@onboarding-nx/observability`) replica `@digital/observability` del monorepo:
+`ObservabilityProvider` (inicializa el SDK de Faro en el navegador),
+`FaroErrorBoundary` (captura errores de render y los reporta con
+`type: react_error_boundary`), y el hook `useFaroEvent` para empujar eventos, logs, errores y
+contexto de usuario. Demo en **`/error-test`**, con los 3 disparadores de error, botones de
+evento/log por nivel y un panel de contexto de usuario.
+
+La app **nunca importa `@grafana/faro-*` directamente** — todo pasa por la lib
+(`grep -rn "@grafana/faro" apps/web/app` no devuelve nada).
+
+Setup manual (Grafana Cloud):
+
+1. Cuenta gratis en <https://grafana.com/auth/sign-up/create-user> (stack `eu-west`).
+2. **Frontend Observability → Create app**: nombre `onboarding-nx-web`, allowed origins
+   `http://localhost:3000`.
+3. Copiar el **Collector URL** en `.env.local` → `NEXT_PUBLIC_FARO_COLLECTOR_URL`
+   (ver `.env.example`; las 4 vars de Faro son `NEXT_PUBLIC_` porque el SDK corre en el
+   navegador, y la clave del collector es pública por diseño).
+4. Verificar en Grafana Cloud → Frontend Observability → **Errors** que llegan los 3 errores
+   de `/error-test`, y en **Events** el `demo_button_click`.
+
+Sin collector URL la app funciona igual: un `console.warn` y cero peticiones al collector
+(fail-soft del Provider, igual criterio que ConfigCat).
+
 ## Estructura
 
 ```text
@@ -48,6 +75,8 @@ onboarding-nx/
     ├── ui/                      # lib de componentes React (Vitest)   → @onboarding-nx/ui
     ├── configcat/               # feature flags ConfigCat (port + adapters CSR/SSR/Mock)
     │                            #   → @onboarding-nx/configcat (Unit 5)
+    ├── observability/           # Grafana Faro: provider + error boundary + useFaroEvent
+    │                            #   → @onboarding-nx/observability (Unit 6)
     └── devices/                 # bounded context partido en capas hexagonales
         ├── domain/              # @onboarding-nx/domain          (TS puro: modelos + ports)
         ├── application/         # @onboarding-nx/application     (casos de uso; depende de domain)
@@ -110,7 +139,17 @@ Requisitos: Node 20+, pnpm. Convención de tests: **Vitest** en las libs y en la
 
 ## Estado verificado
 
-Ejecutado `pnpm nx run-many -t lint test typecheck build` sobre los 6 proyectos → **todo en verde**
-(`@onboarding-nx/web`, `@onboarding-nx/panel`, `@onboarding-nx/ui`, `@onboarding-nx/domain`,
-`@onboarding-nx/application`, `@onboarding-nx/infrastructure`). Único aviso: un `eslint-disable` sin
-usar en `web` (cosmético, `nx lint @onboarding-nx/web --fix`).
+Ejecutado `pnpm nx run-many -t lint test typecheck build` sobre los **17 proyectos** →
+**todo en verde**. Único aviso: un `eslint-disable` sin usar en `web` (cosmético,
+`nx lint @onboarding-nx/web --fix`).
+
+Unit 6 verificada además en navegador (`/error-test`, sin collector URL configurada):
+
+- el error de render se captura, muestra el fallback y **se recupera** al pulsar Reintentar;
+- el error del handler y la promesa rechazada llegan a `window` (donde los recoge la
+  instrumentación de Faro) **sin tumbar la página**;
+- fail-soft correcto: **0 peticiones** al collector y un `console.warn` por señal descartada;
+- `/` y `/dispositivos` **mantienen Static/ISR** en el build — el provider no fuerza dinámico.
+
+Pendiente de la cuenta de Grafana Cloud: confirmar la ingesta real en
+Frontend Observability → Errors / Events.
