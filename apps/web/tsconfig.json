@@ -67,6 +67,9 @@
       "path": "../../libs/configcat"
     },
     {
+      "path": "../../libs/observability"
+    },
+    {
       "path": "../../libs/cms/presentation"
     },
     {

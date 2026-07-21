@@ -1,0 +1,119 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: rgb(var(--color-ink, 26 16 33));
+}
+
+.subtitle {
+  max-width: 60ch;
+  color: rgb(var(--color-ink, 26 16 33) / 0.7);
+}
+
+.panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  background: rgb(var(--color-surface, 255 255 255));
+  border: 1px solid rgb(var(--color-ink, 26 16 33) / 0.12);
+  border-radius: var(--radius-card, 1rem);
+}
+
+.sectionTitle {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: rgb(var(--color-ink, 26 16 33));
+}
+
+.sectionBody {
+  max-width: 70ch;
+  font-size: 0.9rem;
+  color: rgb(var(--color-ink, 26 16 33) / 0.7);
+}
+
+.sectionBody code {
+  padding: 0.1rem 0.3rem;
+  font-size: 0.85em;
+  background: rgb(var(--color-ink, 26 16 33) / 0.06);
+  border-radius: 0.25rem;
+}
+
+.status {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgb(var(--color-ink-muted, 110 100 120));
+}
+
+.ok {
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  color: rgb(var(--color-ink-muted, 110 100 120));
+  background: rgb(var(--color-surface-muted, 245 243 247));
+  border-radius: var(--radius-control, 0.625rem);
+}
+
+.fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid rgb(var(--color-danger, 197 48 48) / 0.3);
+  border-radius: var(--radius-control, 0.625rem);
+  background: rgb(var(--color-danger, 197 48 48) / 0.06);
+}
+
+.fallbackTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgb(var(--color-danger, 197 48 48));
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.button {
+  align-self: flex-start;
+  padding: 0.5rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  color: rgb(var(--color-surface, 255 255 255));
+  background: rgb(var(--color-brand, 158 28 136));
+  border: 1px solid transparent;
+  border-radius: var(--radius-control, 0.625rem);
+  cursor: pointer;
+}
+
+.button:hover {
+  background: rgb(var(--color-brand, 158 28 136) / 0.88);
+}
+
+.button:focus-visible {
+  outline: 2px solid rgb(var(--color-brand, 158 28 136));
+  outline-offset: 2px;
+}

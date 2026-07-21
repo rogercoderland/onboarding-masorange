@@ -1,0 +1,44 @@
+.observability-fallback {
+  --_danger: rgb(var(--color-danger, 197 48 48));
+  --_ink: rgb(var(--color-ink, 26 16 33));
+  --_ink-muted: rgb(var(--color-ink-muted, 110 100 120));
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  border: 1px solid rgb(var(--color-danger, 197 48 48) / 0.3);
+  border-radius: var(--radius-card, 1.25rem);
+  background: rgb(var(--color-danger, 197 48 48) / 0.06);
+  color: var(--_ink);
+}
+
+.observability-fallback__title {
+  margin: 0;
+  font-weight: 600;
+  color: var(--_danger);
+}
+
+.observability-fallback__body {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--_ink-muted);
+}
+
+.observability-fallback__action {
+  margin-top: 0.25rem;
+  padding: 0.5rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  color: rgb(var(--color-surface, 255 255 255));
+  background: var(--_danger);
+  border: 1px solid transparent;
+  border-radius: var(--radius-control, 0.625rem);
+  cursor: pointer;
+}
+
+.observability-fallback__action:focus-visible {
+  outline: 2px solid var(--_danger);
+  outline-offset: 2px;
+}

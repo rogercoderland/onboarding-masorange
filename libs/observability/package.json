@@ -1,0 +1,28 @@
+{
+  "name": "@onboarding-nx/observability",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    },
+    "./testing": {
+      "types": "./src/testing/index.ts",
+      "import": "./src/testing/index.ts"
+    }
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "@grafana/faro-web-sdk": ">=1.19.0"
+  },
+  "nx": {
+    "tags": [
+      "layer:infrastructure"
+    ]
+  }
+}

@@ -5,6 +5,7 @@
   "dependencies": {
     "@onboarding-nx/cms-application": "workspace:*",
     "@onboarding-nx/configcat": "workspace:*",
+    "@onboarding-nx/observability": "workspace:*",
     "@onboarding-nx/cms-domain": "workspace:*",
     "@onboarding-nx/cms-infrastructure": "workspace:*",
     "@onboarding-nx/cms-presentation": "workspace:*",
